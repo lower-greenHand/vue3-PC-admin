@@ -1,0 +1,89 @@
+{
+  "code": 200,
+  "msg": null,
+  "data": [
+    {
+      "key": "1",
+      "sort": 1,
+      "parentKey": "0",
+      "name": "Dashboard",
+      "title": "首页看板",
+      "path": "/dashboard",
+      "icon": "home",
+      "children": null,
+      "disable": false,
+      "component": "views/dashboard/index",
+      "redirect": null,
+      "keepAlive": false
+    },
+    {
+      "key": "2",
+      "sort": 2,
+      "parentKey": "0",
+      "name": "Person",
+      "title": "人员管理",
+      "path": "/person",
+      "icon": "person",
+      "children": null,
+      "disable": false,
+      "component": "views/person/index",
+      "redirect": null,
+      "keepAlive": false
+    },
+    {
+      "key": "3",
+      "sort": 3,
+      "parentKey": "0",
+      "name": "Person",
+      "title": "人员管理",
+      "path": "/person",
+      "icon": "person",
+      "children": null,
+      "disable": false,
+      "component": "views/person/index",
+      "redirect": null,
+      "keepAlive": false
+    },
+    {
+      "key": "4",
+      "sort": 4,
+      "parentKey": "0",
+      "name": "Package",
+      "title": "组件",
+      "path": "/package",
+      "icon": "package",
+      "disable": false,
+      "component": "Layout",
+      "redirect": null,
+      "keepAlive": false,
+      "children": [
+        {
+          "key": "41",
+          "sort": 4,
+          "parentKey": "4",
+          "name": "Form",
+          "title": "form",
+          "path": "/form",
+          "icon": "",
+          "disable": false,
+          "component": "views/package/form/index",
+          "redirect": null,
+          "keepAlive": false
+        },
+        {
+          "key": "42",
+          "sort": 4,
+          "parentKey": "4",
+          "name": "Table",
+          "title": "table",
+          "path": "/table",
+          "icon": "",
+          "disable": false,
+          "component": "views/package/table/index",
+          "redirect": null,
+          "keepAlive": false
+        }
+      ]
+    }
+  ]
+}

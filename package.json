@@ -1,0 +1,57 @@
+{
+  "name": "admin-vue3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "author": {
+    "name": "Mamba"
+  },
+  "scripts": {
+    "serve": "yarn dev",
+    "dev": "vite",
+    "build:dev": "cross-env vite build --mode dev",
+    "build": "cross-env vite build --mode pro",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@iconify/iconify": "^3.1.1",
+    "@vueuse/core": "^10.4.1",
+    "ant-design-vue": "^3.2.20",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
+    "eslint": "^8.44.0",
+    "eslint-plugin-vue": "^7.0.0-beta.4",
+    "fast-glob": "^3.3.1",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.3",
+    "mockjs": "^1.1.0",
+    "msw": "^1.2.5",
+    "pinia": "^2.1.4",
+    "pinia-plugin-persistedstate": "^3.1.0",
+    "process": "^0.11.10",
+    "qs": "^6.11.2",
+    "tsparticles": "^2.12.0",
+    "tsparticles-plugin-polygon-mask": "2.12.0",
+    "tsparticles-slim": "^2.12.0",
+    "vite-plugin-mock": "2.9.6",
+    "vue": "^3.2.47",
+    "vue-drag-resize": "^1.5.4",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.2.2",
+    "vue3-colorpicker": "^2.1.5",
+    "vue3-particles": "^2.12.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "cross-env": "^7.0.3",
+    "echarts": "^5.4.3",
+    "eslint-config-prettier": "^8.8.0",
+    "vite": "^4.3.9",
+    "vite-plugin-svg-icons": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lower-greenHand/vue3-PC-admin"
+  }
+}
