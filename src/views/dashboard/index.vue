@@ -70,6 +70,7 @@ export default defineComponent({
       window.onresize = null;
     });
 
+    // 首页锚点定位
     const getDocEle = () => {
       return document.getElementById('data-board');
     };
