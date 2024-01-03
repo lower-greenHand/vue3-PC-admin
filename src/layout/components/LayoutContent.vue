@@ -51,7 +51,7 @@ export default defineComponent({
   height: calc(100vh - 101px);
   width: 100%;
   .sys-ant-content {
-    height: 100%;
+    height: calc(100vh - 101px);
     width: 100%;
     padding: 12px 0 12px 12px;
     overflow-y: scroll;
@@ -62,7 +62,11 @@ export default defineComponent({
       width: 100%;
     }
     .spin-scroll {
+      height: 100%;
       overflow-y: scroll;
+    }
+    ::v-deep(.ant-spin-container) {
+      height: 100%;
     }
     ::v-deep(.ant-spin-nested-loading > div > .ant-spin) {
       max-height: none;
