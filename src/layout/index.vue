@@ -49,7 +49,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   .layout-right {
-    width: 100%;
+    width: calc(100% - 200px);
 
     ::v-deep(.ant-layout-header) {
       height: auto;

@@ -27,9 +27,14 @@
       </div>
     </div>
     <div class="person-info-mid">
-      <Row wrap type="flex" :gutter="{ xs: 24, sm: 24, md: 24, lg: 24 }">
+      <Row
+        wrap
+        type="flex"
+        :gutter="{ xs: 24, sm: 24, md: 24, lg: 24 }"
+        style="width: 100%"
+      >
         <Col :xl="16"> <DetailList /></Col>
-        <Col :xl="8"> <div>3123123</div></Col>
+        <Col :xl="8"> <ProjectPlat /></Col>
       </Row>
     </div>
   </div>
@@ -37,16 +42,19 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { Button, Row, Col } from 'ant-design-vue';
+import { Button, Row, Col, Carousel } from 'ant-design-vue';
 import headerImg from '/@/assets/images/avatar.png';
 import { listItem } from './data';
 import DetailList from './components/DetailList.vue';
+import ProjectPlat from './components/ProjectPlat.vue';
 export default defineComponent({
   components: {
     DetailList,
+    ProjectPlat,
     Button,
     Row,
     Col,
+    Carousel,
   },
   setup() {
     return { headerImg, listItem };
@@ -66,7 +74,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0px 3px 5px 0px rgba(20, 20, 20, 0.1);
+    box-shadow: 0px 0px 5px 0px rgba(20, 20, 20, 0.1);
     &-avatar {
       width: 70px;
       height: 70px;
@@ -113,6 +121,10 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    width: 100%;
+    ::v-deep(.ant-col) {
+      width: 100%;
+    }
   }
 }
 </style>

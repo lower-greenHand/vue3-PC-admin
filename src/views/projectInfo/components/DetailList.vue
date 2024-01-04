@@ -44,16 +44,42 @@
       </Row>
     </div>
     <div class="project-detail-notice">
-      <div>动态通知</div>
+      <div class="project-detail-notice-title">
+        <div>动态通知</div>
+        <div class="more">更多</div>
+      </div>
+      <List
+        :data-source="dataSource"
+        item-layout="vertical"
+        class="project-detail-notice-list"
+      >
+        <template #renderItem="{ item }">
+          <ListItem>
+            <ListItemMeta :description="item.desc">
+              <template #title>
+                <div class="list-item-title">
+                  <div class="title" :style="{ color: `${item.color}` }">
+                    {{ item.name }}
+                  </div>
+                  <div class="sign">签名：{{ item.signature }}</div>
+                </div>
+              </template>
+              <template #avatar>
+                <Avatar size="large" :src="item.avatar"></Avatar>
+              </template>
+            </ListItemMeta>
+          </ListItem>
+        </template>
+      </List>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { Card, Row, Col } from 'ant-design-vue';
+import { Card, Row, Col, List, Avatar } from 'ant-design-vue';
 import SvgIcon from '/@/components/SvgIcon/index.vue';
-import { projectBasicList } from '../data';
+import { projectBasicList, dataSource } from '../data';
 export default defineComponent({
   components: {
     Card,
@@ -61,12 +87,16 @@ export default defineComponent({
     SvgIcon,
     Row,
     Col,
+    List,
+    Avatar,
+    ListItem: List.Item,
+    ListItemMeta: List.Item.Meta,
   },
   setup() {
     const tabChange = (key) => {
       window.open(key.address, '_blank');
     };
-    return { projectBasicList, tabChange };
+    return { projectBasicList, dataSource, tabChange };
   },
 });
 </script>
@@ -123,10 +153,37 @@ export default defineComponent({
     }
   }
   &-notice {
-    margin-top: 16px;
+    margin: 16px 0;
     font-size: @font-common-size;
-
     font-weight: bold;
+    box-shadow: 0px 3px 5px 0px rgba(20, 20, 20, 0.1);
+    &-title {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-list {
+      padding: 0 16px;
+      margin-top: 12px;
+    }
+    &-list::-webkit-scrollbar {
+      width: 2px;
+    }
+    .list-item-title {
+      .title {
+        font-size: @font-common-size;
+        // color: rgb(0, 187, 255);
+      }
+      .sign {
+        font-size: 12px;
+        color: @text-color-secondary;
+      }
+    }
+    ::v-deep(.ant-list-vertical .ant-list-item-meta-title) {
+      margin-bottom: 6px;
+    }
+    ::v-deep(.ant-list-vertical .ant-list-item-meta) {
+      margin-bottom: 6px;
+    }
   }
   .more {
     font-size: @font-size-base;
