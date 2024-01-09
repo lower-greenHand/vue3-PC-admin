@@ -1,5 +1,5 @@
 <template>
-  <div>table列表</div>
+  <div>pdf预览</div>
 </template>
 
 <script>

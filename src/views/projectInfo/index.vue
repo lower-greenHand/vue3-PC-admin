@@ -1,5 +1,5 @@
 <template>
-  <div class="person-info">
+  <div class="person-info" id="person-info">
     <div class="person-info-title">当前用户信息</div>
     <div class="person-info-data">
       <div style="display: flex; align-items: center">
@@ -38,11 +38,12 @@
       </Row>
     </div>
   </div>
+  <BackTop :target="getDocEle" :visibilityHeight="50" />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { Button, Row, Col, Carousel } from 'ant-design-vue';
+import { Button, Row, Col, Carousel, BackTop } from 'ant-design-vue';
 import headerImg from '/@/assets/images/avatar.png';
 import { listItem } from './data';
 import DetailList from './components/DetailList.vue';
@@ -55,19 +56,27 @@ export default defineComponent({
     Row,
     Col,
     Carousel,
+    BackTop,
   },
   setup() {
-    return { headerImg, listItem };
+    // 项目信息置顶
+    const getDocEle = () => {
+      return document.getElementById('person-info');
+    };
+    return { headerImg, listItem, getDocEle };
   },
 });
 </script>
 
 <style lang="less" scoped>
 .person-info {
+  width: 100%;
   height: 100%;
+  overflow-y: auto;
   &-title {
     font-size: @font-common-size;
     font-weight: bold;
+    margin-bottom: 16px;
   }
   &-data {
     padding: 16px 16px;
