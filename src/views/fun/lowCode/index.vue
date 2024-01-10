@@ -1,13 +1,13 @@
 <template>
   <div class="low-code">
-    <WidgetsList />
-    <LayoutArea />
+    <WidgetsList @add-new-node="handleAddNode" />
+    <LayoutArea ref="layoutAreaRef" />
     <WidgetsConfig />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import WidgetsList from './components/WidgetsList.vue';
 import LayoutArea from './components/LayoutArea.vue';
 import WidgetsConfig from './components/WidgetsConfig.vue';
@@ -18,7 +18,12 @@ export default defineComponent({
     WidgetsConfig,
   },
   setup() {
-    return {};
+    const layoutAreaRef = ref(null);
+
+    const handleAddNode = (event) => {
+      layoutAreaRef.value.addNewNode(event);
+    };
+    return { layoutAreaRef, handleAddNode };
   },
 });
 </script>

@@ -12,8 +12,8 @@
         :preventOnFilter="false"
         chosenClass="draggable-selected"
         drag-class="draggable-selected"
-        @start="onStart"
-        @end="handleEnd"
+        @start.prevent="onStart"
+        @end.prevent="handleEnd"
       >
         <template #item="{ element: fun }">
           <div class="drag-widgets">
@@ -27,11 +27,10 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, onUnmounted } from 'vue';
 import { Button } from 'ant-design-vue';
 import draggable from 'vuedraggable';
 import { widgetsTypeList } from '../lowCodeData';
-// import { DownloadOutlined } from '@ant-design/icons-vue';
 import Bus from '/@/utils/bus.js';
 import SvgIcon from '/@/components/SvgIcon/index.vue';
 export default defineComponent({
@@ -40,14 +39,20 @@ export default defineComponent({
     Button,
     SvgIcon,
   },
-  setup() {
+  emits: ['add-new-node'],
+  setup(_, { emit }) {
     const onStart = (ele) => {
       ele.preventDefault();
     };
     const handleEnd = (ele) => {
       ele.preventDefault();
-      Bus.emit('new-add-node', ele);
+      // emit('add-new-node', ele);
+      Bus.emit('new-add-nodes', ele);
     };
+
+    onUnmounted(() => {
+      Bus.off('new-add-nodes');
+    });
     return { widgetsTypeList, onStart, handleEnd };
   },
 });

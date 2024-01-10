@@ -81,10 +81,9 @@ export default defineComponent({
     const clickCount = ref(0);
     const clickTime = ref(null);
 
-    // 新建node节点
-    Bus.on('new-add-node', (target) => {
-      const screenX = target.originalEvent.clientX,
-        screenY = target.originalEvent.clientY;
+    const addNewNode = (target) => {
+      const screenX = target?.originalEvent?.clientX,
+        screenY = target?.originalEvent?.clientY;
       const containerRect = layoutRef.value.getBoundingClientRect(); // 布局区域的位置
       if (
         screenX - 90 < containerRect.x ||
@@ -120,6 +119,11 @@ export default defineComponent({
         imgUrl: '',
       };
       layoutData.value = layoutData.value.concat(layoutObj);
+    };
+
+    // 新建node节点
+    Bus.on('new-add-nodes', (target) => {
+      addNewNode(target);
     });
 
     // 拖拽回调函数
@@ -166,7 +170,6 @@ export default defineComponent({
 
     // 上传图片获取焦点
     const handleClickImg = (source) => {
-      console.log('layoutData.value--', layoutData.value);
       handleClick(source);
     };
 
@@ -177,6 +180,7 @@ export default defineComponent({
       handleClick,
       handleInputFocus,
       handleClickImg,
+      addNewNode,
     };
   },
 });
