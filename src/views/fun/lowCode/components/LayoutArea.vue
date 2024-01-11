@@ -1,62 +1,81 @@
 <template>
-  <div class="widgets-layout" ref="layoutRef">
-    <template v-if="layoutData">
-      <template v-for="item in layoutData" :key="item.id">
-        <VueDragResize
-          :minw="item.minw"
-          :minh="item.minh"
-          :z="item.z"
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :isActive="false"
-          :is-resizable="item.resizable"
-          :parent-limitation="true"
-          :sticks="item.sticks"
-          @click="handleClick(item)"
-          @resizing="(e) => handleResize(e, item)"
-          @dragging="(e) => handleResize(e, item)"
-        >
-          <!-- text -->
-          <template v-if="item.type == 'text'">
-            <div
-              class="widgets-text"
-              :style="{ width: item.w + 'px', height: item.h + 'px' }"
-            >
-              文本
-            </div>
-          </template>
-          <!-- button -->
-          <template v-else-if="item.type == 'btn'">
-            <Button
-              type="primary"
-              :style="{ width: item.w + 'px', height: item.h + 'px' }"
-              >按钮</Button
-            >
-          </template>
-          <!-- input -->
-          <template v-else-if="item.type == 'input'">
-            <Input
-              :id="'input_' + item.id"
-              v-model:value="item.inputContent"
-              :style="{ width: item.w + 'px', height: item.h + 'px' }"
-              placeholder="请输入"
-              @click="handleInputFocus(item)"
-            />
-          </template>
-          <!-- upload -->
-          <template v-else-if="item.type == 'upload'">
-            <UploadImg
-              :height="item.h"
-              :width="item.w"
-              :widgets-data="item"
-              @click-img="handleClickImg"
-            />
-          </template>
-        </VueDragResize>
+  <div class="widgets-module">
+    <div class="widgets-layout" ref="layoutRef">
+      <template v-if="layoutData">
+        <template v-for="item in layoutData" :key="item.id">
+          <VueDragResize
+            :minw="item.minw"
+            :minh="item.minh"
+            :z="item.z"
+            :x="item.x"
+            :y="item.y"
+            :w="item.w"
+            :h="item.h"
+            :isActive="false"
+            :is-resizable="item.resizable"
+            :parent-limitation="true"
+            :sticks="item.sticks"
+            @click="handleClick(item)"
+            @resizing="(e) => handleResize(e, item)"
+            @dragging="(e) => handleResize(e, item)"
+          >
+            <!-- text -->
+            <template v-if="item.widgetsType == 'text'">
+              <div
+                class="widgets-text"
+                :style="{
+                  width: item.w + 'px',
+                  height: item.h + 'px',
+                  color: item.fontColor,
+                  fontSize: item.fontSize + 'px',
+                  background: item.bgColor,
+                }"
+              >
+                {{ item.label }}
+              </div>
+            </template>
+            <!-- button -->
+            <template v-else-if="item.widgetsType == 'btn'">
+              <Button
+                :type="item.type"
+                :style="{
+                  width: item.w + 'px',
+                  height: item.h + 'px',
+                  color: item.fontColor,
+                  fontSize: item.fontSize + 'px',
+                }"
+                >{{ item.label }}</Button
+              >
+            </template>
+            <!-- input -->
+            <template v-else-if="item.widgetsType == 'input'">
+              <Input
+                :id="'input_' + item.id"
+                v-model:value="item.inputContent"
+                :style="{ width: item.w + 'px', height: item.h + 'px' }"
+                placeholder="请输入"
+                @click="handleInputFocus(item)"
+              />
+            </template>
+            <!-- upload -->
+            <template v-else-if="item.widgetsType == 'upload'">
+              <UploadImg
+                :height="item.h"
+                :width="item.w"
+                :widgets-data="item"
+                @click-img="handleClickImg"
+              />
+            </template>
+          </VueDragResize>
+        </template>
       </template>
-    </template>
+    </div>
+    <WidgetsConfig
+      ref="widgetConfigRef"
+      :layout-data="layoutData"
+      @change-tab="onChangeTab"
+      @del-item="hangeDelItem"
+    />
   </div>
 </template>
 
@@ -67,12 +86,14 @@ import { message, Button, Input } from 'ant-design-vue';
 import VueDragResize from 'vue-drag-resize/src';
 import { widgetsDragList } from '../lowCodeData';
 import UploadImg from './UploadImg.vue';
+import WidgetsConfig from './WidgetsConfig.vue';
 export default defineComponent({
   components: {
     VueDragResize,
     Button,
     Input,
     UploadImg,
+    WidgetsConfig,
   },
   setup() {
     const layoutRef = ref(null);
@@ -80,6 +101,7 @@ export default defineComponent({
     const layoutZ = ref(100);
     const clickCount = ref(0);
     const clickTime = ref(null);
+    const widgetConfigRef = ref(null);
 
     const addNewNode = (target) => {
       const screenX = target?.originalEvent?.clientX,
@@ -115,10 +137,16 @@ export default defineComponent({
         z: layoutZ.value + 5,
         resizable: true,
         inputContent: '',
-        type: widgetsType,
+        widgetsType: widgetsType,
+        type: widgetsDragList[widgetsType].type,
+        label: widgetsDragList[widgetsType].label,
+        fontColor: widgetsDragList[widgetsType].fontColor,
+        fontSize: widgetsDragList[widgetsType].fontSize,
+        bgColor: widgetsDragList[widgetsType].bgColor,
         imgUrl: '',
       };
       layoutData.value = layoutData.value.concat(layoutObj);
+      widgetConfigRef.value.handleChangeTab(layoutObj.id);
     };
 
     // 新建node节点
@@ -146,6 +174,7 @@ export default defineComponent({
         else item.resizable = false;
         return item;
       });
+      widgetConfigRef.value.handleChangeTab(source.id);
     };
 
     // input双击获取焦点
@@ -173,44 +202,59 @@ export default defineComponent({
       handleClick(source);
     };
 
+    // 切换tab
+    const onChangeTab = (target) => {
+      handleClick(target);
+    };
+
+    const hangeDelItem = (key) => {
+      layoutData.value = layoutData.value.filter((item) => item.id != key);
+    };
+
     return {
       layoutRef,
       layoutData,
+      widgetConfigRef,
       handleResize,
       handleClick,
       handleInputFocus,
       handleClickImg,
       addNewNode,
+      onChangeTab,
+      hangeDelItem,
     };
   },
 });
 </script>
 
 <style lang="less" scoped>
-.widgets-layout {
-  padding: 5px;
-  min-width: 600px;
-  position: relative;
-  width: 750px;
-  height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-  background-size: 10px 10px;
-  ::v-deep(.vdr-stick) {
-    border: none;
-    background: green;
-    width: 5px !important;
-    height: 5px !important;
-    border-radius: 100%;
-  }
-  ::v-deep(.content-container) {
-    cursor: move;
-  }
-  .widgets-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px dashed #d9d9d9;
+.widgets-module {
+  display: flex;
+  flex: auto;
+  .widgets-layout {
+    padding: 5px;
+    flex: 1;
+    position: relative;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 10px 10px;
+    ::v-deep(.vdr-stick) {
+      border: none;
+      background: green;
+      width: 5px !important;
+      height: 5px !important;
+      border-radius: 100%;
+    }
+    ::v-deep(.content-container) {
+      cursor: move;
+    }
+    .widgets-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px dashed #d9d9d9;
+    }
   }
 }
 </style>

@@ -64,6 +64,7 @@ export default defineComponent({
   &__title {
     font-size: @font-common-size;
     font-weight: bold;
+    margin-bottom: 5px;
   }
   &__area {
     max-height: calc(100% - 35px);

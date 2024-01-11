@@ -2,7 +2,6 @@
   <div class="low-code">
     <WidgetsList @add-new-node="handleAddNode" />
     <LayoutArea ref="layoutAreaRef" />
-    <WidgetsConfig />
   </div>
 </template>
 
@@ -10,12 +9,10 @@
 import { defineComponent, ref } from 'vue';
 import WidgetsList from './components/WidgetsList.vue';
 import LayoutArea from './components/LayoutArea.vue';
-import WidgetsConfig from './components/WidgetsConfig.vue';
 export default defineComponent({
   components: {
     WidgetsList,
     LayoutArea,
-    WidgetsConfig,
   },
   setup() {
     const layoutAreaRef = ref(null);
