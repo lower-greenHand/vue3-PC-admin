@@ -6,10 +6,11 @@
     "jsx": "preserve",
     "moduleResolution": "node",
     "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["./src/**/*", "./mock/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["./src/**/*", "./mock/**/*", "vite.config.js"],
+  "exclude": ["node_modules", "dist", "**/*.ts"]
 }
