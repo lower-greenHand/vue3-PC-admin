@@ -3,10 +3,13 @@
 vue3+vite+javascript+pina+ant-design-vue 实现的一个 pc 端后台管理系统，动态菜单，beautiful 登录页，首页，打造一个完美的可供使用的后台管理系统。
 
 - Preview
-<p align="center">
-    <img alt="Mamba" width="100%" src="./src/assets/images/login.png">
-    <img alt="Mamba" width="100%" src="./src/assets/images/dashboard.png">
-    <img alt="Mamba" width="100%" src="./src/assets/images/fixpwd.png">
+<p align="center" style="display:flex;flex-wrap: wrap;">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/login.png">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/dashboard.png">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/fixpwd.png">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/screen_shot.png">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/low_code.png">
+    <img alt="Mamba" width="50%" height="50%" src="./src/assets/images/pdf.png">
 </p>
 
 - Get the project code

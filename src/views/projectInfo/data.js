@@ -145,6 +145,9 @@ import loginUrl from '/@/assets/images/login.png';
 import homeUrl from '/@/assets/images/dashboard.png';
 import pwdUrl from '/@/assets/images/fixpwd.png';
 import projectInfoImg from '/@/assets/images/project-info.png';
+import screenShotUrl from '/@/assets/images/screen_shot.png';
+import lowCodeUrl from '/@/assets/images/low_code.png';
+import pdfUrl from '/@/assets/images/pdf.png';
 export const swiperList = [
   {
     imgUrl: loginUrl,
@@ -161,5 +164,17 @@ export const swiperList = [
   {
     imgUrl: projectInfoImg,
     key: 'project-info',
+  },
+  {
+    imgUrl: screenShotUrl,
+    key: 'screen-shot',
+  },
+  {
+    imgUrl: lowCodeUrl,
+    key: 'low-code',
+  },
+  {
+    imgUrl: pdfUrl,
+    key: 'pdf',
   },
 ];
