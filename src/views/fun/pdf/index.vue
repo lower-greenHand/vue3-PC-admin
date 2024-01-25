@@ -96,8 +96,7 @@ export default defineComponent({
     // 根据Url获取到pdf实例
     const getPdfDocument = (times) => {
       pdfjs
-        .getDocument('_EcoMOD_lite_v1_test项目122701_122801_2023年12月28日.pdf')
-        // .getDocument('compressed.tracemonkey-pldi-09.pdf')
+        .getDocument('compressed.tracemonkey-pldi-09.pdf')
         .promise.then((doc) => {
           pdfDoc = doc;
           totalNum.value = doc.numPages;
