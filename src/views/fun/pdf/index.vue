@@ -18,20 +18,21 @@
         <div>pdf预览</div>
       </div>
       <div class="sys-pdf-setting-mid">
-        <div class="hover" @click="onEnlarge">放大</div>
-        <div class="hover">缩小</div>
+        <div class="hover" @click="onScaleUp">放大</div>
+        <div class="hover" @click="onScaleDown">缩小</div>
         <div>
           <Input
             type="number"
             v-model:value="inputPage"
             style="width: 50px"
             :min="1"
-            :max="12"
+            :max="totalNum"
+            @change="handleChange"
           />
         </div>
         <div>/</div>
         <div>{{ totalNum }}</div>
-        <div class="hover">到指定页</div>
+        <div class="hover" @click="onAppointPage">到指定页</div>
         <div class="hover" @click="onScrolTop">返回顶部</div>
       </div>
       <div class="sys-pdf-setting-right">
@@ -63,7 +64,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, nextTick } from 'vue';
+import { defineComponent, onMounted, ref, nextTick, watch } from 'vue';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
 import { Input, Tooltip } from 'ant-design-vue';
 import SvgIcon from '/@/components/SvgIcon/index.vue';
@@ -89,11 +90,11 @@ export default defineComponent({
     const scaleNum = ref(1.0);
     const pdfRender = ref(null);
     onMounted(() => {
-      getPdfDocument();
+      getPdfDocument('first');
     });
 
     // 根据Url获取到pdf实例
-    const getPdfDocument = () => {
+    const getPdfDocument = (times) => {
       pdfjs
         .getDocument('_EcoMOD_lite_v1_test项目122701_122801_2023年12月28日.pdf')
         // .getDocument('compressed.tracemonkey-pldi-09.pdf')
@@ -101,8 +102,12 @@ export default defineComponent({
           pdfDoc = doc;
           totalNum.value = doc.numPages;
           nextTick(() => {
-            renderPage(1); // 中间内容区
-            renderLeftDirectory(1); // 左侧预览目录
+            if (times == 'first') {
+              renderPage(1); // 中间内容区
+              renderLeftDirectory(1); // 左侧预览目录
+            } else {
+              renderPage(1); // 中间内容区
+            }
           });
         });
     };
@@ -112,11 +117,18 @@ export default defineComponent({
       pdfDoc.getPage(pageSize).then(async (page) => {
         const viewport = page.getViewport({
           scale: scaleNum.value,
-          rotation: 180,
         });
         const canvas = document.getElementById(`pdf-canvas__${pageSize}`);
         const context = canvas.getContext('2d');
-        const outputScale = window.devicePixelRatio || 1;
+        const radios = window.devicePixelRatio || 1;
+        let backingStoreRatio =
+          context.webkitBackingStorePixelRatio ||
+          context.mozBackingStorePixelRatio ||
+          context.msBackingStorePixelRatio ||
+          context.oBackingStorePixelRatio ||
+          context.backingStorePixelRatio ||
+          1;
+        const outputScale = radios / backingStoreRatio;
         canvas.width = Math.floor(
           viewport.viewBox[2] * outputScale * scaleNum.value
         );
@@ -153,17 +165,19 @@ export default defineComponent({
           transform,
           viewport: viewport,
         };
-        page.render(renderContext);
-        if (totalNum.value > pageSize) {
-          renderPage(pageSize + 1);
-        }
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(() => {
+          if (totalNum.value > pageSize) {
+            renderPage(pageSize + 1);
+          } else {
+            setTimeout(() => {
+              pdfSettingRef.value.style.height = '42px';
+              pdfSettingRef.value.style.opacity = '1';
+              pdfRender.value.style.height = 'calc(100% - 42px)';
+            }, 200);
+          }
+        });
       });
-
-      setTimeout(() => {
-        pdfSettingRef.value.style.height = '42px';
-        pdfSettingRef.value.style.opacity = '1';
-        pdfRender.value.style.height = 'calc(100% - 42px)';
-      }, 1000);
     };
 
     // 左侧预览目录
@@ -259,11 +273,51 @@ export default defineComponent({
       });
     };
 
-    const onScrolTop = () => {
-      inputPage.value = 1;
+    const handleChange = (e) => {
+      const inputValue = e.target.value;
+      if (inputValue && inputValue > 0) {
+        if (inputValue.toString().indexOf('.') > -1) {
+          const num = parseInt(inputValue);
+          inputPage.value = num;
+        } else {
+          scrollToStart(
+            inputValue > totalNum.value ? totalNum.value : inputValue
+          );
+        }
+      } else {
+        inputPage.value = 1;
+        scrollToStart(1);
+      }
     };
 
-    const onEnlarge = () => {};
+    // 到指定页
+    const onAppointPage = async () => {
+      const res = await pdfDoc.saveDocument;
+      console.log('height-------', res);
+
+      // scrollToStart(
+      //   inputPage.value > totalNum.value ? totalNum.value : inputPage.value
+      // );
+    };
+
+    // 返回顶部
+    const onScrolTop = () => {
+      scrollToStart(1);
+    };
+
+    // 放大
+    const onScaleUp = async () => {
+      scaleNum.value += 0.2;
+      if (scaleNum.value > 4) return;
+      getPdfDocument('two');
+    };
+
+    // 缩小
+    const onScaleDown = () => {
+      scaleNum.value += -0.2;
+      if (scaleNum.value < 0.2) return;
+      getPdfDocument('two');
+    };
 
     return {
       collapsed,
@@ -274,7 +328,10 @@ export default defineComponent({
       pdfRender,
       handleCollapsed,
       onScrolTop,
-      onEnlarge,
+      onScaleUp,
+      onScaleDown,
+      handleChange,
+      onAppointPage,
     };
   },
 });
