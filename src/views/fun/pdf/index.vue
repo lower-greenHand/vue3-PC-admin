@@ -37,6 +37,10 @@
       </div>
       <div class="sys-pdf-setting-right">
         <Tooltip>
+          <template #title>使用pdf-dist包预览</template>
+          <div class="preview" @click="openPreview">预览2</div>
+        </Tooltip>
+        <Tooltip>
           <template #title>下载</template>
           <SvgIcon name="download" />
         </Tooltip>
@@ -72,6 +76,7 @@ import pdfjs from 'pdfjs-dist/build/pdf';
 const pdfjsWorker = import('pdfjs-dist/build/pdf.worker.entry');
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 import 'pdfjs-dist/web/pdf_viewer.css';
+import { useRouter } from 'vue-router';
 export default defineComponent({
   components: {
     MenuUnfoldOutlined,
@@ -89,6 +94,7 @@ export default defineComponent({
     const totalNum = ref(0);
     const scaleNum = ref(1.0);
     const pdfRender = ref(null);
+    const router = useRouter();
     onMounted(() => {
       getPdfDocument('first');
     });
@@ -290,13 +296,12 @@ export default defineComponent({
     };
 
     // 到指定页
-    const onAppointPage = async () => {
-      const res = await pdfDoc.saveDocument;
-      console.log('height-------', res);
-
-      // scrollToStart(
-      //   inputPage.value > totalNum.value ? totalNum.value : inputPage.value
-      // );
+    const onAppointPage = () => {
+      // const res = await pdfDoc.saveDocument;
+      // console.log('height-------', res);
+      scrollToStart(
+        inputPage.value > totalNum.value ? totalNum.value : inputPage.value
+      );
     };
 
     // 返回顶部
@@ -318,6 +323,15 @@ export default defineComponent({
       getPdfDocument('two');
     };
 
+    // 直接使用下载的pdf-dist包预览
+    const openPreview = () => {
+      const routeUrl = router.resolve({
+        path: '/preview-pdf',
+      });
+
+      window.open(routeUrl.href, '_blank');
+    };
+
     return {
       collapsed,
       listRef,
@@ -331,6 +345,7 @@ export default defineComponent({
       onScaleDown,
       handleChange,
       onAppointPage,
+      openPreview,
     };
   },
 });
@@ -384,8 +399,16 @@ export default defineComponent({
     }
     &-right {
       margin-right: 10px;
+      width: 100px;
+      display: flex;
+      justify-content: space-around;
       &:hover {
         cursor: pointer;
+      }
+      .preview {
+        &:hover {
+          color: dodgerblue;
+        }
       }
     }
   }

@@ -8,6 +8,15 @@ const indexRouters = [
       keepAlive: false,
     },
   },
+  {
+    path: '/preview-pdf',
+    name: 'PreViewPdf',
+    component: () => import('/@/views/fun/pdf/previewPdf.vue'),
+    meta: {
+      title: 'pdf预览',
+      keepAlive: false,
+    },
+  },
 ];
 
 export default indexRouters;
