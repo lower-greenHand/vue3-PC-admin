@@ -190,12 +190,22 @@ export default defineComponent({
       pdfDoc.getPage(pageSize).then(async (page) => {
         const scale = 0.2;
         const viewport = page.getViewport({
-          scale,
-          rotation: 180,
+          scale: scale,
+          // rotation: 180,
         });
         const canvas = document.getElementById(`pdf-directory__${pageSize}`);
         const context = canvas.getContext('2d');
-        const outputScale = window.devicePixelRatio || 1;
+        // const outputScale = window.devicePixelRatio || 1;
+        const dpr = window.devicePixelRatio || 1;
+        const bsr =
+          context.webkitBackingStorePixelRatio ||
+          context.mozBackingStorePixelRatio ||
+          context.msBackingStorePixelRatio ||
+          context.oBackingStorePixelRatio ||
+          context.backingStorePixelRatio ||
+          1;
+        const outputScale = dpr / bsr;
+        console.log('devicePixelRatio', outputScale);
         canvas.width = Math.floor(viewport.viewBox[2] * outputScale * scale);
         canvas.height = Math.floor(viewport.viewBox[3] * outputScale * scale);
         canvas.style.width = Math.floor(viewport.viewBox[2] * scale) + 'px';
