@@ -2,7 +2,7 @@ const errorRoutes = [
   // 404页面
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('/@/layout/index.vue '),
+    component: () => import('/@/layout/index.vue'),
     meta: {
       title: 'ErrorPage',
     },
