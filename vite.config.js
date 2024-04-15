@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { loadEnv } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
+import viteCompression from 'vite-plugin-compression';
+import viteImagemin from 'vite-plugin-imagemin';
+import { visualizer } from 'rollup-plugin-visualizer';
 // https://vitejs.dev/config/
 export default defineConfig((mode, command) => {
   const env = loadEnv(mode.mode, process.cwd(), '');
@@ -27,9 +30,60 @@ export default defineConfig((mode, command) => {
         prodEnabled: false, //设置打包是否启用 mock 功能
         mockPath: './mock/', // 注意：此时的 mockPath 地址是真正安装的 mock 文件夹的地址;
       }),
+      viteCompression({
+        verbose: true, // 默认即可
+        disable: false, // 开启压缩(不禁用)，默认即可
+        deleteOriginFile: false, // 删除源文件
+        threshold: 10240, // 压缩前最小文件大小
+        filter: /\.(js|css|json|html|ico|svg)(\?.*)?$/i, // 匹配要压缩的文件的正则表达式，默认为匹配.js、.css、.json、.html、.ico和.svg文件
+        algorithm: 'gzip', // 压缩算法
+        compressionOptions: { level: 9 }, // 指定gzip压缩级别，默认为9（最高级别）
+        ext: '.gz', // 文件类型
+      }),
+      viteImagemin({
+        gifsicle: {
+          optimizationLevel: 7,
+          interlaced: false,
+        },
+        optipng: {
+          optimizationLevel: 7,
+        },
+        mozjpeg: {
+          quality: 20,
+        },
+        pngquant: {
+          quality: [0.8, 0.9],
+          speed: 4,
+        },
+        svgo: {
+          plugins: [
+            {
+              name: 'removeViewBox',
+            },
+            {
+              name: 'removeEmptyAttrs',
+              active: false,
+            },
+          ],
+        },
+      }),
+      visualizer({
+        open: false, // 在默认用户代理中打开生成的文件
+        gzipSize: true, // 收集 gzip 大小并将其显示
+        brotliSize: true, // 收集 brotli 大小并将其显示
+        // filename: 'stats.html', // 分析图生成的文件名
+        filename: './node_modules/.cache/visualizer/stats.html',
+      }),
     ],
     root: process.cwd(),
     base: VITE_PUBLIC_PATH,
+    build: {
+      drop_debugger: true,
+      //drop_console: true, // 删除所有 console
+      // Turning off brotliSize display can slightly reduce packaging time
+      brotliSize: false,
+      chunkSizeWarningLimit: 2000,
+    },
     resolve: {
       alias: [
         {
