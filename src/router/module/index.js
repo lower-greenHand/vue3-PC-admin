@@ -17,6 +17,15 @@ const indexRouters = [
       keepAlive: false,
     },
   },
+  {
+    path: '/large-screen',
+    name: 'LargeScreen',
+    component: () => import('/@/views/largeScreen/index.vue'),
+    meta: {
+      title: '可视化大屏',
+      keepAlive: false,
+    },
+  },
 ];
 
 export default indexRouters;
