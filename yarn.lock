@@ -39,6 +39,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.5.5":
+  version "7.25.0"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.25.0.tgz#3af9a91c1b739c569d5d80cc917280919c544ecb"
+  integrity sha512-7dRy4DwXwtzBrPbZflqxnvfxLF8kdZXPkhymtDeFoFqE6ldzjQFgYTtYIFARcLEYDrqfBfYcZt1WqFxRoyC9Rw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@ctrl/tinycolor@^3.4.0":
   version "3.6.1"
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz#b6c75a56a1947cc916ea058772d666a2c8932f31"
@@ -242,6 +249,53 @@
   version "9.13.1"
   resolved "https://registry.npmmirror.com/@intlify/shared/-/shared-9.13.1.tgz#202741d11ece1a9c7480bfd3f27afcf9cb8f72e4"
   integrity sha512-u3b6BKGhE6j/JeRU6C/RL2FgyJfy6LakbtfeVF8fJXURpZZTzfh3e05J0bu0XPw447Q6/WUp3C4ajv4TMS4YsQ==
+
+"@jiaminghi/bezier-curve@*":
+  version "0.0.9"
+  resolved "https://registry.npmmirror.com/@jiaminghi/bezier-curve/-/bezier-curve-0.0.9.tgz#5196aca93c8b061a612b4c3eabcedf9490cef6ee"
+  integrity sha512-u9xJPOEl6Dri2E9FfmJoGxYQY7vYJkURNX04Vj64tdi535tPrpkuf9Sm0lNr3QTKdHQh0DdNRsaa62FLQNQEEw==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+
+"@jiaminghi/c-render@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.npmmirror.com/@jiaminghi/c-render/-/c-render-0.4.3.tgz#982ebd8f71b443bb9507834227834973ebd9b6d8"
+  integrity sha512-FJfzj5hGj7MLqqqI2D7vEzHKbQ1Ynnn7PJKgzsjXaZpJzTqs2Yw5OSeZnm6l7Qj7jyPAP53lFvEQNH4o4j6s+Q==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    "@jiaminghi/bezier-curve" "*"
+    "@jiaminghi/color" "*"
+    "@jiaminghi/transition" "*"
+
+"@jiaminghi/charts@^0.2.18":
+  version "0.2.18"
+  resolved "https://registry.npmmirror.com/@jiaminghi/charts/-/charts-0.2.18.tgz#63ded95200789fc1a1fd04b7fd9e56f58d22d90f"
+  integrity sha512-K+HXaOOeWG9OOY1VG6M4mBreeeIAPhb9X+khG651AbnwEwL6G2UtcAQ8GWCq6GzhczcLwwhIhuaHqRygwHC0sA==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    "@jiaminghi/c-render" "^0.4.3"
+
+"@jiaminghi/color@*", "@jiaminghi/color@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@jiaminghi/color/-/color-1.1.3.tgz#a2336750d1266155ffe80375c58c26fdec495611"
+  integrity sha512-ZY3hdorgODk4OSTbxyXBPxAxHPIVf9rPlKJyK1C1db46a50J0reFKpAvfZG8zMG3lvM60IR7Qawgcu4ZDO3+Hg==
+
+"@jiaminghi/transition@*":
+  version "1.1.11"
+  resolved "https://registry.npmmirror.com/@jiaminghi/transition/-/transition-1.1.11.tgz#576d8af092434b34201eba5eaecc79dd33c8ad8c"
+  integrity sha512-owBggipoHMikDHHDW5Gc7RZYlVuvxHADiU4bxfjBVkHDAmmck+fCkm46n2JzC3j33hWvP9nSCAeh37t6stgWeg==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+
+"@kjgl77/datav-vue3@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.npmmirror.com/@kjgl77/datav-vue3/-/datav-vue3-1.7.3.tgz#acbbfced34e73757e4b103550441c739b189abb9"
+  integrity sha512-8zNu2zDXylDS6aL8SNDR7/h4ccO2LnBg/KbTwOeF7p9hqiRW9TR7Zd/e8baYnJPb9tAwYOubzWTQnjUTdtE8dA==
+  dependencies:
+    "@jiaminghi/c-render" "^0.4.3"
+    "@jiaminghi/charts" "^0.2.18"
+    "@jiaminghi/color" "^1.1.3"
+    "@vueuse/core" "^10.9.0"
 
 "@mswjs/cookies@^0.2.2":
   version "0.2.2"
@@ -590,10 +644,25 @@
     "@vueuse/shared" "10.10.0"
     vue-demi ">=0.14.7"
 
+"@vueuse/core@^10.9.0":
+  version "10.11.0"
+  resolved "https://registry.npmmirror.com/@vueuse/core/-/core-10.11.0.tgz#b042585a8bf98bb29c177b33999bd0e3fcd9e65d"
+  integrity sha512-x3sD4Mkm7PJ+pcq3HX8PLPBadXCAlSDR/waK87dz0gQE+qJnaaFhc/dZVfJz+IUYzTMVGum2QlR7ImiJQN4s6g==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.20"
+    "@vueuse/metadata" "10.11.0"
+    "@vueuse/shared" "10.11.0"
+    vue-demi ">=0.14.8"
+
 "@vueuse/metadata@10.10.0":
   version "10.10.0"
   resolved "https://registry.npmmirror.com/@vueuse/metadata/-/metadata-10.10.0.tgz#53e61e9380670e342cbe6e03d852f3319308cb5b"
   integrity sha512-UNAo2sTCAW5ge6OErPEHb5z7NEAg3XcO9Cj7OK45aZXfLLH1QkexDcZD77HBi5zvEiLOm1An+p/4b5K3Worpug==
+
+"@vueuse/metadata@10.11.0":
+  version "10.11.0"
+  resolved "https://registry.npmmirror.com/@vueuse/metadata/-/metadata-10.11.0.tgz#27be47cf115ee98e947a1bfcd0b1b5b35d785fb6"
+  integrity sha512-kQX7l6l8dVWNqlqyN3ePW3KmjCQO3ZMgXuBMddIu83CmucrsBfXlH+JoviYyRBws/yLTQO8g3Pbw+bdIoVm4oQ==
 
 "@vueuse/shared@10.10.0":
   version "10.10.0"
@@ -601,6 +670,13 @@
   integrity sha512-2aW33Ac0Uk0U+9yo3Ypg9s5KcR42cuehRWl7vnUHadQyFvCktseyxxEPBi1Eiq4D2yBGACOnqLZpx1eMc7g5Og==
   dependencies:
     vue-demi ">=0.14.7"
+
+"@vueuse/shared@10.11.0":
+  version "10.11.0"
+  resolved "https://registry.npmmirror.com/@vueuse/shared/-/shared-10.11.0.tgz#be09262b2c5857069ed3dadd1680f22c4cb6f984"
+  integrity sha512-fyNoIXEq3PfX1L3NkNhtVQUSRtqYwJtJg+Bp9rIzculIZWHTkKSysujrOk2J+NrRulLTQH9+3gGSfYLWSEWU1A==
+  dependencies:
+    vue-demi ">=0.14.8"
 
 "@xmldom/xmldom@^0.8.3":
   version "0.8.10"
@@ -1701,6 +1777,11 @@ duplexer3@^0.1.4:
   version "0.1.5"
   resolved "https://registry.npmmirror.com/duplexer3/-/duplexer3-0.1.5.tgz#0b5e4d7bad5de8901ea4440624c8e1d20099217e"
   integrity sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA==
+
+echarts-liquidfill@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmmirror.com/echarts-liquidfill/-/echarts-liquidfill-3.1.0.tgz#4ec70f3697382d0404c95fff9f3e8dd85c8377da"
+  integrity sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==
 
 echarts@^5.4.3:
   version "5.5.0"
@@ -6213,6 +6294,11 @@ vue-demi@*, vue-demi@>=0.14.7:
   version "0.14.7"
   resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.7.tgz#8317536b3ef74c5b09f268f7782e70194567d8f2"
   integrity sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==
+
+vue-demi@>=0.14.8:
+  version "0.14.10"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.10.tgz#afc78de3d6f9e11bf78c55e8510ee12814522f04"
+  integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
 
 vue-drag-resize@^1.5.0-rc3, vue-drag-resize@^1.5.4:
   version "1.5.4"
