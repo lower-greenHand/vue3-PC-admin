@@ -39,7 +39,7 @@
             <RightMidArea />
           </div>
           <div class="common-w">
-            <RightBottomArea />
+            <RightBottomArea ref="rightBottomRef" />
           </div>
         </div>
       </div>
@@ -80,6 +80,7 @@ export default defineComponent({
   setup() {
     const fullScreenRef = ref(null);
     const isShowScreen = ref(false);
+    const rightBottomRef = ref(null);
     const { isFullscreen, enter, exit, toggle } = useFullscreen(fullScreenRef);
     watch(
       () => isFullscreen.value,
@@ -90,8 +91,15 @@ export default defineComponent({
     // 是否全屏
     const toggleFullscreen = () => {
       toggle();
+      // rightBottomRef.value.autoMove();
     };
-    return { isShowScreen, isFullscreen, fullScreenRef, toggleFullscreen };
+    return {
+      isShowScreen,
+      isFullscreen,
+      fullScreenRef,
+      toggleFullscreen,
+      rightBottomRef,
+    };
   },
 });
 </script>
