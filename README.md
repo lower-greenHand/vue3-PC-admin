@@ -10,6 +10,7 @@ vue3+vite+javascript+pina+ant-design-vue 实现的一个 pc 端后台管理系�
     <img alt="Mamba" width="49%" height="49%" src="./src/assets/images/screen_shot.png">
     <img alt="Mamba" width="49%" height="49%" src="./src/assets/images/low_code.png">
     <img alt="Mamba" width="49%" height="49%" src="./src/assets/images/pdf.png">
+    <img alt="Mamba" width="49%" height="49%" src="./src/assets/images/screen_large.png">
 </p>
 
 - Get the project code
