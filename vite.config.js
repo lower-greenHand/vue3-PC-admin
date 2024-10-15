@@ -3,6 +3,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { loadEnv } from 'vite';
+import VitePluginCertificate from 'vite-plugin-mkcert';
 import { viteMockServe } from 'vite-plugin-mock';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
@@ -22,6 +23,10 @@ export default defineConfig((mode, command) => {
         ],
         // 指定symbolId格式
         symbolId: 'icon-[dir]-[name]',
+      }),
+      // 签名 // 可以使用https访问，
+      VitePluginCertificate({
+        source: 'coding',
       }),
       viteMockServe({
         supportTs: false,
@@ -104,6 +109,7 @@ export default defineConfig((mode, command) => {
     server: {
       host: '0.0.0.0', //  Listening on all local IPs
       port: VITE_PORT, // 将端口号替换为你希望使用的端口号
+      https: true,
       proxy: {
         '/auth': {
           target: 'https://particles.js.org', //接口域名
