@@ -53,6 +53,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
     "cross-env": "^7.0.3",
+    "default-passive-events": "^2.0.0",
     "echarts": "^5.4.3",
     "eslint-config-prettier": "^8.8.0",
     "rollup-plugin-visualizer": "^5.12.0",
