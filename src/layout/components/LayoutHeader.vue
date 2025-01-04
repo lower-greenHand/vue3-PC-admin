@@ -11,6 +11,10 @@
     <!-- 中间区域 -->
     <div style="flex: auto; margin: 0 10px"></div>
     <div class="header-right">
+      <!-- 可视化大屏 -->
+      <div class="large-screen" @click="jumpVisualLarerScreen">
+        <SvgIcon name="large_screen" />
+      </div>
       <!-- 语种 -->
       <Language />
       <Dropdown
@@ -53,6 +57,7 @@ import avatorImg from '/@/assets/images/avatar.png';
 import { itemList } from '../data';
 import useStoreOut from '/@/store/module/use.js';
 import ForgetPassword from './ForgetPassword.vue';
+import { useRouter } from 'vue-router';
 export default defineComponent({
   components: {
     Header: Layout.Header,
@@ -69,6 +74,7 @@ export default defineComponent({
   },
   setup() {
     const userStore = useStoreOut();
+    const router = useRouter();
     const collapsed = ref(false);
     const forgetPwd = ref(null);
     const headerStyle = {
@@ -85,6 +91,12 @@ export default defineComponent({
 
     const getPopupContainer = (trigger) => {
       return trigger.parentNode ?? document.body;
+    };
+
+    // 跳转可视化大屏
+    const jumpVisualLarerScreen = () => {
+      const route = router.resolve('/large-screen');
+      window.open(route.href, '_blank');
     };
 
     // 点击头像选择功能：修改密码，退出登录
@@ -111,6 +123,7 @@ export default defineComponent({
       handleCollapsed,
       handleItem,
       getPopupContainer,
+      jumpVisualLarerScreen,
     };
   },
 });
@@ -131,6 +144,10 @@ export default defineComponent({
     padding: 0 15px;
     color: #000000;
     display: flex;
+    .large-screen {
+      margin-right: 10px;
+      cursor: pointer;
+    }
 
     .header-avatar {
       display: flex;

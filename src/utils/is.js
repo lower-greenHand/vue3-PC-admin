@@ -55,3 +55,10 @@ export const isUrl = (path) => {
 export const isWindow = (val) => {
   return typeof val !== 'undefined' && is(val, 'Window');
 };
+
+// Judging as an function string
+export const isFunctionString = (val) => {
+  return (
+    (typeof val === 'string' && val.includes('=>')) || val.includes('function')
+  );
+};
