@@ -4,7 +4,7 @@ import qs from 'qs';
 import useStore from '/@/store/module/use.js';
 
 const service = axios.create({
-  baseUrl: import.meta.env.VITE_WEB_BASIC_URL_API,
+  baseURL: import.meta.env.VITE_WEB_BASIC_URL_API || window.location.origin,
   timeout: 60 * 1000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',

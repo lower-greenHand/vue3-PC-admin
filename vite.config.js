@@ -1,13 +1,18 @@
 import { defineConfig } from 'vite';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
 import { loadEnv } from 'vite';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 import VitePluginCertificate from 'vite-plugin-mkcert';
 import { viteMockServe } from 'vite-plugin-mock';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
+import path, { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
+function pathResolve(dir) {
+  return resolve(process.cwd(), '.', dir);
+}
 // https://vitejs.dev/config/
 export default defineConfig((mode, command) => {
   const env = loadEnv(mode.mode, process.cwd(), '');
@@ -92,8 +97,8 @@ export default defineConfig((mode, command) => {
     resolve: {
       alias: [
         {
-          find: '/@',
-          replacement: resolve(__dirname, '/src'),
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
         },
         {
           find: 'vue-i18n',
@@ -126,6 +131,9 @@ export default defineConfig((mode, command) => {
       },
     },
     css: {
+      postcss: {
+        plugins: [tailwindcss, autoprefixer()],
+      },
       preprocessorOptions: {
         less: {
           additionalData: `

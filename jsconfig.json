@@ -1,16 +1,38 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "useDefineForClassFields": true,
     "module": "esnext",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
-    "moduleResolution": "node",
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types/", "./types"],
+    /* Bundler mode */
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "ignoreDeprecations": "5.0", //高版本上句报错，此句解决。如此句报错可注释掉
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
     "paths": {
-      "@/*": ["src/*"]
+      "/@/*": ["src/*"]
     }
   },
-  "include": ["./src/**/*", "./mock/**/*", "vite.config.js"],
+  "include": [
+    "./src/**/*.js",
+    "src/**/*.vue",
+    "src/**/*.jsx",
+    "./mock/**/*",
+    "vite.config.js"
+  ],
   "exclude": ["node_modules", "dist", "**/*.ts"]
 }
