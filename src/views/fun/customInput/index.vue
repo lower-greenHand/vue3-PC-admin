@@ -44,6 +44,21 @@
     </div>
     <div class="mt-5 mb-3">默认回显数据</div>
     <Button @click="handleDefaultSet">设置</Button>
+    <Button @click="handleDefaultSet" class="ml-2">效果预览</Button>
+    <!-- {{ extractList }} -->
+    <div class="preview-content">
+      <div class="preview-content--text">
+        <div v-html="getRenderContent()" class="content-preview"></div>
+      </div>
+      <div class="preview-content--icons">
+        <SvgIcon name="star" size="22" class="mt-2" />
+      </div>
+    </div>
+    <div
+      class="edit-input"
+      contenteditable="true"
+      :style="{ height: defaultHeight + 'px' }"
+    />
   </div>
 </template>
 
@@ -388,6 +403,18 @@ export default defineComponent({
       extractData(editableDiv.value.innerText);
     };
 
+    const getRenderContent = () => {
+      let contentHtml = '';
+      extractList.value.forEach((content) => {
+        if (content.default) {
+          contentHtml += content.default;
+        } else if (content.value) {
+          contentHtml += `<span style="margin: 0 3px;color: red;font-size: 14px;font-weight: 500;">${content.value}</span>`;
+        }
+      });
+      return contentHtml;
+    };
+
     return {
       editableDiv,
       defaultHeight,
@@ -395,12 +422,14 @@ export default defineComponent({
       characterNum,
       maxLength,
       tagsList,
+      extractList,
       onInput,
       onMouseDown,
       onClickPlaceholder,
       onClickItem,
       getMouseRange,
       handleDefaultSet,
+      getRenderContent,
     };
   },
 });
@@ -473,6 +502,41 @@ export default defineComponent({
   .tag-btn {
     padding-left: 6px;
     color: #1450f5;
+  }
+
+  .preview-content {
+    margin: 0 auto;
+    width: 400px;
+    min-height: 100px;
+    border: 1px solid #e3e4e5;
+    background: #e3e4e5;
+    border-radius: 8px;
+    display: flex;
+
+    &--text {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      // flex-wrap: wrap;
+
+      .content-preview {
+        word-wrap: break-word;
+        white-space: normal;
+      }
+      .tag-value {
+        margin: 0 3px;
+        color: red;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    &--icons {
+      min-width: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 </style>
