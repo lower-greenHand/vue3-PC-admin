@@ -26,6 +26,15 @@ const indexRouters = [
       keepAlive: false,
     },
   },
+  {
+    path: '/custom-components',
+    name: 'CustomComponents',
+    component: () => import('/@/views/customComponents/index.vue'),
+    meta: {
+      title: '自定义组件',
+      keepAlive: false,
+    },
+  },
 ];
 
 export default indexRouters;
